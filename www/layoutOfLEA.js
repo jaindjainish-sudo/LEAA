@@ -113,10 +113,29 @@ function clearHistory() {
 }
 
 
-function triggerSOS() {
-    logActivity("SOS activated", "Emergency dialer requested", "call");
-    window.location.href = "tel:112";
+
+async function triggerSOS() {
+    logActivity(
+        "SOS activated",
+        "Requesting Android emergency calling",
+        "call"
+    );
+
+    try {
+        const bridge = window.Capacitor?.Plugins?.DirectCall;
+
+        if (!bridge) {
+            window.location.href = "tel:112";
+            return;
+        }
+
+        await bridge.callNumber({ number: "112" });
+    } catch (error) {
+        // Keep the supported emergency dialer as fallback.
+        window.location.href = "tel:112";
+    }
 }
+
 
 
 // Contacts
