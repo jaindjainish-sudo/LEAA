@@ -322,6 +322,17 @@ async function shareLocation() {
 }
 
 
+function checkCallingBridge() {
+    const bridge = window.Capacitor?.Plugins?.DirectCall;
+
+    alert(
+        bridge
+            ? "Native bridge detected ✅"
+            : "Native bridge not detected ❌"
+    );
+}
+
+
 // Safe text rendering for user-entered values
 function escapeHTML(value) {
     return String(value).replace(/[&<>"']/g, character => ({
