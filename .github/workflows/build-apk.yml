@@ -32,6 +32,32 @@ jobs:
       - name: Create Android project
         run: npx cap add android
 
+      - name: Add Android location permissions
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          manifest = Path("android/app/src/main/AndroidManifest.xml")
+          content = manifest.read_text()
+
+          permissions = (
+              '    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />\n'
+              '    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />\n'
+          )
+
+          if "android.permission.ACCESS_FINE_LOCATION" not in content:
+              content, count = re.subn(
+                  r'(?m)^(\s*)<application\b',
+                  permissions + r'\1<application',
+                  content,
+                  count=1
+              )
+              if count != 1:
+                  raise RuntimeError("Could not find the application tag in AndroidManifest.xml")
+              manifest.write_text(content)
+          PY
+
       - name: Sync web app
         run: npx cap sync android
 
