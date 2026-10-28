@@ -365,6 +365,29 @@ async function callContact(phone, name) {
 }
 
 
+function dialerPress(value) {
+    const input = document.getElementById("dialerNumber");
+    input.value += value;
+}
+
+function dialerBackspace() {
+    const input = document.getElementById("dialerNumber");
+    input.value = input.value.slice(0, -1);
+}
+
+async function callDialerNumber() {
+    const input = document.getElementById("dialerNumber");
+    const number = input.value.trim();
+
+    if (!number) {
+        alert("Enter a phone number first.");
+        return;
+    }
+
+    await callContact(number, "Dialed number");
+}
+
+
 // Initial display
 renderContacts();
 renderHistory();
