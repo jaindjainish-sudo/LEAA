@@ -788,6 +788,48 @@ html {
     }
 }
 
+/* Stable LEA keypad */
+#contacts {
+    padding-bottom: 120px;
+}
+
+#contacts .dialer-panel {
+    position: relative;
+    margin: 16px auto 24px;
+    scroll-margin: 0;
+}
+
+#contacts .dialer-display {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    caret-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+#contacts .dialer-keypad button,
+#contacts .dialer-call-button,
+#contacts .dialer-delete-button,
+#contacts .keypad-fab {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#contacts .keypad-fab {
+    position: fixed;
+    z-index: 20;
+    right: max(20px, calc((100vw - 760px) / 2 + 24px));
+    bottom: calc(94px + env(safe-area-inset-bottom));
+}
+
+/* Keep hidden panels completely hidden */
+#contacts .dialer-panel.hidden,
+.keypad-fab.hidden {
+    display: none !important;
+}
 
 /* Contacts screen: phone address book + floating circular keypad toggle */
 #contacts { padding-bottom: 112px; }
