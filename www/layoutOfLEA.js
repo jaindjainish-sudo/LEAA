@@ -135,6 +135,7 @@ async function triggerSOS() {
 
 
 // Contacts
+
 function renderContacts() {
     const list = document.getElementById("contactList");
 
@@ -149,18 +150,24 @@ function renderContacts() {
     list.innerHTML = contacts.map(contact => `
         <div class="contact-item">
             <div class="contact-avatar">${escapeHTML(contact.name.charAt(0).toUpperCase())}</div>
+
             <div class="contact-details">
                 <strong>${escapeHTML(contact.name)}</strong>
                 <small>${escapeHTML(contact.phone)}</small>
             </div>
-            <a class="mini-button" href="tel:${encodeURIComponent(contact.phone)}"
-               onclick="logActivity('Contact call requested', ${JSON.stringify("Dialer opened for " + contact.name)}, 'call')">Call</a>
+
+            <button class="mini-button"
+                onclick='callContact(${JSON.stringify(contact.phone)}, ${JSON.stringify(contact.name)})'>
+                Call
+            </button>
+
             <button class="mini-button delete-button"
                 onclick="deleteContact('${contact.id}')"
                 aria-label="Delete ${escapeHTML(contact.name)}">✕</button>
         </div>
     `).join("");
 }
+
 
 document.getElementById("contactForm").addEventListener("submit", function(event) {
     event.preventDefault();
@@ -327,6 +334,36 @@ function escapeHTML(value) {
         "'": "&#39;"
     })[character]);
 }
+
+
+async function callContact(phone, name) {
+    const number = String(phone || "").trim();
+
+    if (!number) {
+        alert("This contact has no phone number.");
+        return;
+    }
+
+    try {
+        const bridge = window.Capacitor?.Plugins?.DirectCall;
+
+        if (bridge && typeof bridge.callNumber === "function") {
+            await bridge.callNumber({ number: number });
+        } else {
+            window.location.href = `tel:${number}`;
+        }
+
+        logActivity(
+            "Contact call requested",
+            "Calling " + name,
+            "call"
+        );
+    } catch (error) {
+        console.error("Contact call failed:", error);
+        window.location.href = `tel:${number}`;
+    }
+}
+
 
 // Initial display
 renderContacts();
