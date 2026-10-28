@@ -1,1 +1,45 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEA | Emergency Assistance</title>
+    <link rel="stylesheet" href="layoutOfLEA.css">
+</head>
+<body>
+<div class="app">
+    <header class="topbar">
+        <div class="brand"><div class="brand-icon">✚</div><div><h2>LEA</h2><p>LOCAL EMERGENCY ASSISTANCE</p></div></div>
+        <button class="icon-button" onclick="showScreen('profile')" title="Profile">♙</button>
+    </header>
+    <main>
+        <section id="home" class="screen">
+            <div class="welcome"><div><p class="eyebrow">YOUR SAFETY, OUR PRIORITY</p><h1>Need help?<br><span>We're here.</span></h1><p class="muted">Quick assistance, right when you need it.</p></div><div class="shield">🛡️</div></div>
+            <div class="sos-area"><button class="sos-button" onclick="triggerSOS()"><span class="sos-symbol">!</span><strong>SOS</strong><small>EMERGENCY HELP</small></button><p class="sos-caption">Tap for emergency assistance</p></div>
+            <div class="location-card"><div class="location-icon">📍</div><div class="location-info"><h3>Your current location</h3><p id="locationText">Location not shared yet</p></div><button class="outline-button" onclick="getLocation()">Locate</button></div>
+            <button class="share-card" onclick="shareLocation()"><span class="share-icon">➤</span><span><strong>Share my location</strong><small>Send your location to someone you trust</small></span><span class="service-arrow">→</span></button>
+        </section>
+        <!-- CONTACTS / DIALER -->
+        <section id="contacts" class="screen hidden">
+            <p class="eyebrow">PHONE</p><h1>Contacts</h1><p class="muted">Contacts saved on your phone.</p>
+            <div id="phoneContactsStatus" class="contacts-status" role="status">Loading phone contacts…</div>
+            <div id="contactList" class="contact-list"></div>
+            <div id="dialerPanel" class="panel dialer-panel hidden" aria-label="Phone keypad">
+                <input id="dialerNumber" class="dialer-display" type="tel" placeholder="Enter number" aria-label="Phone number" autocomplete="tel" inputmode="tel">
+                <div class="dialer-keypad">
+                    <button type="button" onclick="dialerPress('1')"><strong>1</strong></button><button type="button" onclick="dialerPress('2')"><strong>2</strong><small>ABC</small></button><button type="button" onclick="dialerPress('3')"><strong>3</strong><small>DEF</small></button>
+                    <button type="button" onclick="dialerPress('4')"><strong>4</strong><small>GHI</small></button><button type="button" onclick="dialerPress('5')"><strong>5</strong><small>JKL</small></button><button type="button" onclick="dialerPress('6')"><strong>6</strong><small>MNO</small></button>
+                    <button type="button" onclick="dialerPress('7')"><strong>7</strong><small>PQRS</small></button><button type="button" onclick="dialerPress('8')"><strong>8</strong><small>TUV</small></button><button type="button" onclick="dialerPress('9')"><strong>9</strong><small>WXYZ</small></button>
+                    <button type="button" onclick="dialerPress('*')"><strong>*</strong></button><button type="button" onclick="dialerPress('0')"><strong>0</strong><small>+</small></button><button type="button" onclick="dialerPress('#')"><strong>#</strong></button>
+                </div>
+                <div class="dialer-actions"><button type="button" class="dialer-call-button" onclick="callDialerNumber()" aria-label="Call number">☎</button><button type="button" class="dialer-delete-button" onclick="dialerBackspace()" aria-label="Delete last digit">⌫</button></div>
+            </div>
+            <button id="keypadFab" class="keypad-fab" type="button" onclick="toggleDialer()" aria-label="Open keypad" title="Keypad"><span>▦</span></button>
+        </section>
+        <section id="history" class="screen hidden"><p class="eyebrow">YOUR RECENT ACTIVITY</p><h1>Activity history</h1><p class="muted">Review actions recorded in this app.</p><div class="history-summary"><div><span>📋</span><strong id="historyCount">0</strong><small>Activities</small></div><div><span>📍</span><strong id="locationCount">0</strong><small>Location actions</small></div></div><div id="historyList" class="history-list"></div><button class="outline-button clear-button" onclick="clearHistory()">Clear history</button></section>
+        <section id="profile" class="screen hidden"><p class="eyebrow">YOUR PERSONAL SPACE</p><h1>My profile</h1><p class="muted">Keep your information up to date.</p><div class="profile-card"><div class="avatar" id="avatarInitial">U</div><h2 id="profileDisplayName">Your name</h2><p class="muted">LEA member</p></div><div class="panel" id="profilePanel"><form id="profileForm"><label for="profileName">Full name</label><input id="profileName" type="text" placeholder="Your name" required><label for="profilePhone">Phone number</label><input id="profilePhone" type="tel" placeholder="Your phone number"><label for="profileEmail">Email (optional)</label><input id="profileEmail" type="email" placeholder="Your email"><button class="primary-button" type="submit">Save profile</button></form></div><div class="privacy-note"><span>🔒</span><p>Your information is stored in this browser on this device. This prototype does not send it to an emergency service.</p></div></section>
+    </main>
+    <nav class="bottom-nav"><button class="nav-item active" data-screen="home" onclick="showScreen('home')"><span>⌂</span><small>Home</small></button><button class="nav-item" data-screen="contacts" onclick="showScreen('contacts')"><span>♧</span><small>Contacts</small></button><button class="nav-item" data-screen="history" onclick="showScreen('history')"><span>◷</span><small>History</small></button><button class="nav-item" data-screen="profile" onclick="showScreen('profile')"><span>♙</span><small>Profile</small></button></nav>
+</div>
+<script src="layoutOfLEA.js"></script>
+</body></html>
