@@ -116,7 +116,7 @@ function clearHistory() {
 
 async function triggerSOS() {
     // Replace with your friend's number, including country code.
-    const friendNumber = "+919947052092";
+    const friendNumber = "112";
 
     try {
         const bridge = window.Capacitor?.Plugins?.DirectCall;
