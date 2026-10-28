@@ -1,0 +1,810 @@
+:root {
+    --bg: #0b1120;
+    --panel: #141e30;
+    --panel-light: #1b2940;
+    --border: #293750;
+    --text: #f4f7fc;
+    --muted: #9aa9bf;
+    --red: #f04452;
+    --green: #4bd6a0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+button, input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+button:focus-visible, input:focus-visible {
+    outline: 2px solid #79aaff;
+    outline-offset: 3px;
+}
+
+.app {
+    width: 100%;
+    max-width: 760px;
+    min-height: 100vh;
+    margin: auto;
+    padding-bottom: 95px;
+    background: var(--bg);
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    background: #f04452;
+    border-radius: 14px;
+    font-size: 27px;
+    font-weight: bold;
+}
+
+.brand h2 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: 2px;
+}
+
+.brand p {
+    margin: 4px 0 0;
+    font-size: 9px;
+    letter-spacing: 1.3px;
+    color: var(--muted);
+}
+
+.icon-button {
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    color: white;
+    border-radius: 13px;
+    font-size: 24px;
+}
+
+main {
+    padding: 25px 24px 35px;
+}
+
+.screen {
+    animation: appear 0.2s ease;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.eyebrow {
+    color: #ff707b;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.7px;
+}
+
+h1 {
+    margin: 12px 0;
+    font-size: clamp(29px, 6vw, 39px);
+    line-height: 1.18;
+    letter-spacing: -1px;
+}
+
+h1 span {
+    color: var(--red);
+}
+
+.muted {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.shield {
+    font-size: 50px;
+    padding: 12px;
+    background: #17243a;
+    border-radius: 22px;
+}
+
+.sos-area {
+    text-align: center;
+    padding: 30px 0 28px;
+}
+
+.sos-button {
+    width: 174px;
+    height: 174px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    color: white;
+    border: 8px solid #542732;
+    outline: 1px solid #f0445260;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ff5965, #d91e36);
+    box-shadow: 0 0 0 12px #f044520d, 0 14px 35px #e41e3630;
+}
+
+.sos-button:hover {
+    transform: scale(1.035);
+    box-shadow: 0 0 0 15px #f0445215, 0 14px 35px #e41e3640;
+}
+
+.sos-symbol {
+    display: grid;
+    place-items: center;
+    width: 29px;
+    height: 29px;
+    margin-bottom: 4px;
+    border: 2px solid white;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+.sos-button strong {
+    font-size: 36px;
+    letter-spacing: 2px;
+}
+
+.sos-button small {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    margin-top: 3px;
+}
+
+.sos-caption {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 14px 0;
+}
+
+.section-heading h2 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.section-heading p {
+    margin: 5px 0 0;
+}
+
+.location-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 23px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--panel);
+}
+
+.location-icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    background: #203d38;
+    border-radius: 13px;
+    font-size: 21px;
+}
+
+.location-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.location-info h3 {
+    margin: 0 0 5px;
+    font-size: 13px;
+}
+
+.location-info p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 11px;
+    overflow-wrap: anywhere;
+}
+
+.outline-button {
+    border: 1px solid #43516b;
+    background: transparent;
+    color: white;
+    border-radius: 10px;
+    padding: 10px 13px;
+    font-size: 12px;
+}
+
+.outline-button:hover {
+    background: var(--panel-light);
+}
+
+.share-card {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    text-align: left;
+    margin-top: 12px;
+    padding: 17px;
+    color: white;
+    background: #17243a;
+    border: 1px solid #2b3d59;
+    border-radius: 16px;
+}
+
+.share-icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 13px;
+    background: #29445c;
+    font-size: 22px;
+}
+
+.share-card strong, .share-card small {
+    display: block;
+}
+
+.share-card strong {
+    font-size: 13px;
+}
+
+.share-card small {
+    margin-top: 5px;
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.share-card .service-arrow {
+    margin-left: auto;
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    z-index: 10;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 760px;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+    background: #101a2bf5;
+    border-top: 1px solid var(--border);
+    backdrop-filter: blur(15px);
+}
+
+.nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 2px;
+    border: none;
+    border-radius: 12px;
+    color: #8291aa;
+    background: transparent;
+}
+
+.nav-item span {
+    font-size: 23px;
+    line-height: 1;
+}
+
+.nav-item small {
+    font-size: 10px;
+}
+
+.nav-item.active {
+    color: #ff6571;
+    background: #f0445210;
+}
+
+/* Forms and other screens */
+
+.panel {
+    margin-top: 22px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--panel);
+}
+
+.panel h3 {
+    margin-top: 0;
+    font-size: 16px;
+}
+
+label {
+    display: block;
+    margin: 16px 0 8px;
+    color: #c9d4e5;
+    font-size: 12px;
+}
+
+input {
+    display: block;
+    width: 100%;
+    padding: 13px 14px;
+    color: white;
+    background: #0d1626;
+    border: 1px solid #30405a;
+    border-radius: 11px;
+}
+
+input::placeholder {
+    color: #70809a;
+}
+
+.primary-button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    border: none;
+    border-radius: 11px;
+    color: white;
+    background: var(--red);
+    font-weight: 700;
+}
+
+.primary-button:hover {
+    background: #ff5965;
+}
+
+.count {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    background: var(--panel-light);
+    color: white;
+    font-size: 12px;
+}
+
+.contact-list, .history-list {
+    display: grid;
+    gap: 11px;
+    margin-top: 16px;
+}
+
+.contact-item, .history-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: var(--panel);
+}
+
+.contact-avatar {
+    display: grid;
+    place-items: center;
+    width: 43px;
+    height: 43px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    color: #c3d8ff;
+    background: #293b5b;
+    font-weight: bold;
+}
+
+.contact-details, .history-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.contact-details strong, .contact-details small,
+.history-details strong, .history-details small {
+    display: block;
+    overflow-wrap: anywhere;
+}
+
+.contact-details strong, .history-details strong {
+    font-size: 13px;
+}
+
+.contact-details small, .history-details small {
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.mini-button {
+    padding: 9px 11px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--panel-light);
+    color: white;
+    font-size: 11px;
+    text-decoration: none;
+}
+
+.delete-button {
+    color: #ff8089;
+}
+
+.empty-state {
+    padding: 30px 15px;
+    border: 1px dashed #35445d;
+    border-radius: 15px;
+    color: var(--muted);
+    text-align: center;
+    font-size: 13px;
+}
+
+.history-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 22px 0;
+}
+
+.history-summary div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--panel);
+}
+
+.history-summary span {
+    font-size: 23px;
+}
+
+.history-summary strong {
+    font-size: 25px;
+}
+
+.history-summary small {
+    color: var(--muted);
+}
+
+.history-icon {
+    font-size: 22px;
+}
+
+.clear-button {
+    margin-top: 20px;
+}
+
+.profile-card {
+    text-align: center;
+    padding: 25px;
+    margin-top: 20px;
+    background: linear-gradient(145deg, #1c2c45, #131d30);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+}
+
+#profile {
+    min-height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+#profile .profile-card {
+    flex: 1;
+}
+
+.avatar {
+    display: grid;
+    place-items: center;
+    width: 75px;
+    height: 75px;
+    margin: auto;
+    border-radius: 50%;
+    background: #30496c;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.profile-card h2 {
+    margin-bottom: 5px;
+}
+
+.privacy-note {
+    display: flex;
+    gap: 12px;
+    margin-top: 17px;
+    padding: 15px;
+    border-radius: 13px;
+    background: #17243a;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.privacy-note p {
+    margin: 0;
+}
+
+@media (min-width: 600px) {
+    main {
+        padding: 32px;
+    }
+
+    .service-card {
+        min-height: 155px;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 380px) {
+    main {
+        padding: 20px 15px;
+    }
+
+    .topbar {
+        padding: 16px;
+    }
+
+    .service-card {
+        padding: 12px;
+    }
+
+    .location-card {
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .outline-button {
+        padding: 9px;
+    }
+}
+
+
+/* Remove blue tap highlight from buttons */
+button,
+button *,
+[role="button"],
+.tab-btn,
+.nav-btn {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Keep button clicks from showing the default outline */
+button:focus,
+button:active,
+[role="button"]:focus,
+.tab-btn:focus,
+.nav-btn:focus {
+    outline: none;
+}
+
+/* Prevent text from being selected while tapping buttons */
+button,
+[role="button"],
+.tab-btn,
+.nav-btn {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+
+
+/* LEA — smoother, more polished interactions */
+button {
+    -webkit-tap-highlight-color: transparent;
+    transition:
+        transform 0.15s ease,
+        filter 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+/* Subtle response when a button is pressed */
+button:active {
+    transform: scale(0.97);
+    filter: brightness(0.94);
+}
+
+/* Keyboard accessibility without a blue tap outline */
+button:focus-visible {
+    outline: 2px solid #94a3b8;
+    outline-offset: 3px;
+}
+
+/* Smoother scrolling between content areas */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    button {
+        transition: none;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+
+
+/* iPhone-inspired dialer for LEA */
+.dialer-panel {
+    max-width: 420px;
+    margin: 20px auto 28px;
+    padding: 22px 18px;
+    border-radius: 28px;
+}
+
+.dialer-display {
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    background: transparent;
+    text-align: center;
+    font-size: 30px;
+    letter-spacing: 2px;
+    padding: 18px 6px;
+    margin-bottom: 18px;
+}
+
+.dialer-keypad {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.dialer-keypad button {
+    width: 72px;
+    height: 72px;
+    max-width: 100%;
+    justify-self: center;
+    border: none;
+    border-radius: 50%;
+    background: #e9edf2;
+    color: #17191d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.dialer-keypad button strong {
+    font-size: 27px;
+    font-weight: 500;
+}
+
+.dialer-keypad button small {
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.dialer-actions {
+    display: grid;
+    grid-template-columns: 1fr 58px 38px;
+    align-items: center;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.dialer-actions .outline-button {
+    padding: 12px 8px;
+    font-size: 12px;
+}
+
+.dialer-call-button {
+    width: 58px;
+    height: 58px;
+    border: none;
+    border-radius: 50%;
+    background: #25b765;
+    color: white;
+    font-size: 26px;
+}
+
+.dialer-delete-button {
+    border: none;
+    background: transparent;
+    font-size: 23px;
+    color: #737b86;
+}
+
+.dialer-keypad button:active,
+.dialer-call-button:active {
+    transform: scale(0.94);
+}
+
+@media (max-width: 360px) {
+    .dialer-panel {
+        padding: 18px 10px;
+    }
+
+    .dialer-keypad {
+        gap: 10px;
+    }
+
+    .dialer-keypad button {
+        width: 64px;
+        height: 64px;
+    }
+}
+
+
+/* Contacts screen: phone address book + floating circular keypad toggle */
+#contacts { padding-bottom: 112px; }
+.contacts-status { color: var(--muted); font-size: 12px; line-height: 1.5; margin: 14px 0 8px; }
+#contacts .contact-list { margin-top: 10px; padding-bottom: 18px; }
+.contact-call-icon { flex: 0 0 42px; width: 42px; height: 42px; border: 0; border-radius: 50%; background: #25b765; color: #fff; font-size: 19px; display: grid; place-items: center; }
+.keypad-fab { position: fixed; z-index: 9; right: max(22px, calc((100vw - 760px) / 2 + 24px)); bottom: calc(88px + env(safe-area-inset-bottom)); width: 62px; height: 62px; border: 3px solid #2c584b; border-radius: 50%; background: #25b765; color: #fff; box-shadow: 0 8px 24px #0006; display: grid; place-items: center; font-size: 27px; }
+.keypad-fab span { line-height: 1; }
+.keypad-fab.is-open { background: #26364b; border-color: #42516a; }
+.dialer-panel { max-width: 420px; margin: 20px auto 36px; padding: 20px 16px; border-radius: 26px; scroll-margin-bottom: 120px; }
+.dialer-display { width: 100%; border: none; background: transparent; text-align: center; font-size: 30px; letter-spacing: 2px; padding: 14px 6px; margin-bottom: 16px; }
+.dialer-keypad { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; max-width: 300px; margin: 0 auto; }
+.dialer-keypad button { width: 68px; height: 68px; max-width: 100%; justify-self: center; border: none; border-radius: 50%; background: #e9edf2; color: #17191d; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+.dialer-keypad button strong { font-size: 26px; font-weight: 500; }
+.dialer-keypad button small { font-size: 9px; letter-spacing: 2px; }
+.dialer-actions { display: flex; align-items: center; justify-content: center; gap: 28px; margin-top: 22px; }
+.dialer-call-button { width: 60px; height: 60px; border: none; border-radius: 50%; background: #25b765; color: white; font-size: 26px; }
+.dialer-delete-button { width: 44px; height: 44px; border: 1px solid var(--border); border-radius: 50%; background: var(--panel-light); color: white; font-size: 22px; }
+.dialer-keypad button:active, .dialer-call-button:active, .keypad-fab:active { transform: scale(.94); }
+@media (max-width: 360px) { .dialer-panel { padding: 18px 10px; } .dialer-keypad { gap: 9px; } .dialer-keypad button { width: 62px; height: 62px; } .keypad-fab { right: 18px; width: 58px; height: 58px; } }
