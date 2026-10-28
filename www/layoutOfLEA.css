@@ -614,3 +614,32 @@ input::placeholder {
         padding: 9px;
     }
 }
+
+
+/* Remove blue tap highlight from buttons */
+button,
+button *,
+[role="button"],
+.tab-btn,
+.nav-btn {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Keep button clicks from showing the default outline */
+button:focus,
+button:active,
+[role="button"]:focus,
+.tab-btn:focus,
+.nav-btn:focus {
+    outline: none;
+}
+
+/* Prevent text from being selected while tapping buttons */
+button,
+[role="button"],
+.tab-btn,
+.nav-btn {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
