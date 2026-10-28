@@ -25,7 +25,17 @@
             <div id="phoneContactsStatus" class="contacts-status" role="status">Loading phone contacts…</div>
             <div id="contactList" class="contact-list"></div>
             <div id="dialerPanel" class="panel dialer-panel hidden" aria-label="Phone keypad">
-                <input id="dialerNumber" class="dialer-display" type="tel" placeholder="Enter number" aria-label="Phone number" autocomplete="tel" inputmode="tel">
+                <input
+    id="dialerNumber"
+    class="dialer-display"
+    type="text"
+    placeholder="Enter number"
+    aria-label="Phone number"
+    readonly
+    inputmode="none"
+    autocomplete="off"
+    tabindex="-1"
+>
                 <div class="dialer-keypad">
                     <button type="button" onclick="dialerPress('1')"><strong>1</strong></button><button type="button" onclick="dialerPress('2')"><strong>2</strong><small>ABC</small></button><button type="button" onclick="dialerPress('3')"><strong>3</strong><small>DEF</small></button>
                     <button type="button" onclick="dialerPress('4')"><strong>4</strong><small>GHI</small></button><button type="button" onclick="dialerPress('5')"><strong>5</strong><small>JKL</small></button><button type="button" onclick="dialerPress('6')"><strong>6</strong><small>MNO</small></button>
