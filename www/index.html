@@ -63,31 +63,61 @@
         </section>
 
         <!-- CONTACTS -->
-        <section id="contacts" class="screen hidden">
-            <p class="eyebrow">YOUR SAFETY NETWORK</p>
-            <h1>Emergency contacts</h1>
-            <p class="muted">Keep your trusted people close.</p>
+       
+<section id="contacts" class="screen hidden">
+    <p class="eyebrow">PHONE</p>
+    <h1>Contacts</h1>
+    <p class="muted">Call someone you trust.</p>
 
-            <div class="panel add-panel">
-                <h3>＋ Add a contact</h3>
-                <form id="contactForm">
-                    <label for="contactName">Full name</label>
-                    <input id="contactName" type="text" placeholder="Enter name" required>
+    <div class="panel dialer-panel">
+        <input
+            id="dialerNumber"
+            class="dialer-display"
+            type="tel"
+            placeholder="Enter number"
+            aria-label="Phone number"
+            autocomplete="tel"
+        >
 
-                    <label for="contactPhone">Phone number</label>
-                    <input id="contactPhone" type="tel" placeholder="Enter phone number" required>
+        <div class="dialer-keypad">
+            <button type="button" onclick="dialerPress('1')"><strong>1</strong></button>
+            <button type="button" onclick="dialerPress('2')"><strong>2</strong><small>ABC</small></button>
+            <button type="button" onclick="dialerPress('3')"><strong>3</strong><small>DEF</small></button>
 
-                    <button class="primary-button" type="submit">Save contact</button>
-                </form>
-            </div>
+            <button type="button" onclick="dialerPress('4')"><strong>4</strong><small>GHI</small></button>
+            <button type="button" onclick="dialerPress('5')"><strong>5</strong><small>JKL</small></button>
+            <button type="button" onclick="dialerPress('6')"><strong>6</strong><small>MNO</small></button>
 
-            <div class="section-heading">
-                <h2>Saved contacts</h2>
-                <span id="contactCount" class="count">0</span>
-            </div>
-            <div id="contactList" class="contact-list"></div>
-        </section>
+            <button type="button" onclick="dialerPress('7')"><strong>7</strong><small>PQRS</small></button>
+            <button type="button" onclick="dialerPress('8')"><strong>8</strong><small>TUV</small></button>
+            <button type="button" onclick="dialerPress('9')"><strong>9</strong><small>WXYZ</small></button>
 
+            <button type="button" onclick="dialerPress('*')"><strong>*</strong></button>
+            <button type="button" onclick="dialerPress('0')"><strong>0</strong><small>+</small></button>
+            <button type="button" onclick="dialerPress('#')"><strong>#</strong></button>
+        </div>
+
+        <div class="dialer-actions">
+            <button type="button" class="outline-button" onclick="pickPhoneContact()">
+                ☻ Import phone contact
+            </button>
+            <button type="button" class="dialer-call-button" onclick="callDialerNumber()" aria-label="Call number">
+                ☎
+            </button>
+            <button type="button" class="dialer-delete-button" onclick="dialerBackspace()" aria-label="Delete last digit">
+                ⌫
+            </button>
+        </div>
+    </div>
+
+    <div class="section-heading">
+        <h2>Trusted contacts</h2>
+        <span id="contactCount" class="count">0</span>
+    </div>
+
+    <div id="contactList" class="contact-list"></div>
+</section>
+</escape>
         <!-- HISTORY -->
         <section id="history" class="screen hidden">
             <p class="eyebrow">YOUR RECENT ACTIVITY</p>
