@@ -216,16 +216,22 @@ async function loadPhoneContacts() {
 function toggleDialer() {
     const panel = document.getElementById("dialerPanel");
     const button = document.getElementById("keypadFab");
+
     if (!panel || !button) return;
+
     const opening = panel.classList.contains("hidden");
+
     panel.classList.toggle("hidden", !opening);
     button.classList.toggle("is-open", opening);
-    button.setAttribute("aria-label", opening ? "Close keypad" : "Open keypad");
-    button.title = opening ? "Close keypad" : "Keypad";
-    if (opening) {
-        panel.scrollIntoView({ behavior: "smooth", block: "center" });
-        document.getElementById("dialerNumber")?.focus({ preventScroll: true });
-    }
+
+    button.setAttribute(
+        "aria-label",
+        opening ? "Close keypad" : "Open keypad"
+    );
+
+    button.title = opening ? "Close keypad" : "Open keypad";
+
+    // Do not focus the number field or automatically scroll.
 }
 
 // Profile
