@@ -643,3 +643,42 @@ button,
     user-select: none;
 }
 
+
+
+/* LEA — smoother, more polished interactions */
+button {
+    -webkit-tap-highlight-color: transparent;
+    transition:
+        transform 0.15s ease,
+        filter 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+/* Subtle response when a button is pressed */
+button:active {
+    transform: scale(0.97);
+    filter: brightness(0.94);
+}
+
+/* Keyboard accessibility without a blue tap outline */
+button:focus-visible {
+    outline: 2px solid #94a3b8;
+    outline-offset: 3px;
+}
+
+/* Smoother scrolling between content areas */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    button {
+        transition: none;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+
