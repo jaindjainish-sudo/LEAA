@@ -115,27 +115,23 @@ function clearHistory() {
 
 
 async function triggerSOS() {
-    logActivity(
-        "SOS activated",
-        "Requesting Android emergency calling",
-        "call"
-    );
+    // Replace with your friend's number, including country code.
+    const friendNumber = "+91XXXXXXXXXX";
 
     try {
         const bridge = window.Capacitor?.Plugins?.DirectCall;
 
-        if (!bridge) {
-            window.location.href = "tel:112";
-            return;
+        if (bridge && typeof bridge.callNumber === "function") {
+            await bridge.callNumber({ number: friendNumber });
+        } else {
+            // Fallback: opens the phone dialer.
+            window.location.href = `tel:${friendNumber}`;
         }
-
-        await bridge.callNumber({ number: "112" });
     } catch (error) {
-        // Keep the supported emergency dialer as fallback.
-        window.location.href = "tel:112";
+        alert("Calling failed. Please use the phone dialer.");
+        window.location.href = `tel:${friendNumber}`;
     }
 }
-
 
 
 // Contacts
