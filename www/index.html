@@ -44,6 +44,40 @@
         title="Add contact"
     >＋</button>
 </div>
+<div id="addContactForm" class="add-contact-form hidden">
+    <h3>Add new contact</h3>
+
+    <label for="newContactFirstName">First name</label>
+    <input
+        id="newContactFirstName"
+        type="text"
+        placeholder="Enter first name"
+        autocomplete="off"
+    >
+
+    <label for="newContactLastName">Last name</label>
+    <input
+        id="newContactLastName"
+        type="text"
+        placeholder="Enter last name"
+        autocomplete="off"
+    >
+
+    <p id="addContactError" class="muted" role="status"></p>
+
+    <button
+        type="button"
+        class="primary-button"
+        onclick="saveNewContact()"
+    >Add Contact</button>
+
+    <button
+        type="button"
+        class="outline-button"
+        onclick="cancelAddContact()"
+    >Cancel</button>
+</div>
+            
                 <input
     id="dialerNumber"
     class="dialer-display"
