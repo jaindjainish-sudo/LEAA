@@ -902,6 +902,51 @@ html {
     color: #ff8089;
 }
 
+/* Keep the keypad fixed above LEA's bottom navigation */
+#contacts .dialer-panel {
+    position: fixed !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: calc(85px + env(safe-area-inset-bottom)) !important;
+    top: auto !important;
+    transform: translateX(-50%) !important;
+
+    width: calc(100% - 32px) !important;
+    max-width: 420px !important;
+    max-height: calc(100dvh - 115px) !important;
+    overflow-y: auto;
+
+    margin: 0 !important;
+    z-index: 15;
+}
+
+/* Keep the keypad centered when buttons are pressed */
+#contacts .dialer-panel:active {
+    transform: translateX(-50%) !important;
+}
+
+/* Never show the panel when closed */
+#contacts .dialer-panel.hidden {
+    display: none !important;
+}
+
+/* Keep the number row and plus icon together */
+.dialer-number-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.dialer-number-row .dialer-display {
+    flex: 1;
+    min-width: 0;
+}
+
+.add-contact-icon {
+    flex-shrink: 0;
+}
+
 /* Contacts screen: phone address book + floating circular keypad toggle */
 #contacts { padding-bottom: 112px; }
 .contacts-status { color: var(--muted); font-size: 12px; line-height: 1.5; margin: 14px 0 8px; }
