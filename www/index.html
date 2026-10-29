@@ -24,60 +24,7 @@
             <p class="eyebrow">PHONE</p><h1>Contacts</h1><p class="muted">Contacts saved on your phone.</p>
             <div id="phoneContactsStatus" class="contacts-status" role="status">Loading phone contacts…</div>
             <div id="contactList" class="contact-list"></div>
-           <div class="dialer-number-row">
-    <input
-        id="dialerNumber"
-        class="dialer-display"
-        type="text"
-        placeholder="Enter number"
-        aria-label="Phone number"
-        readonly
-        inputmode="none"
-        autocomplete="off"
-        tabindex="-1"
-    >
-    <button
-        type="button"
-        class="add-contact-icon"
-        onclick="openAddContactForm()"
-        aria-label="Add contact"
-        title="Add contact"
-    >＋</button>
-</div>
-<div id="addContactForm" class="add-contact-form hidden">
-    <h3>Add new contact</h3>
-
-    <label for="newContactFirstName">First name</label>
-    <input
-        id="newContactFirstName"
-        type="text"
-        placeholder="Enter first name"
-        autocomplete="off"
-    >
-
-    <label for="newContactLastName">Last name</label>
-    <input
-        id="newContactLastName"
-        type="text"
-        placeholder="Enter last name"
-        autocomplete="off"
-    >
-
-    <p id="addContactError" class="muted" role="status"></p>
-
-    <button
-        type="button"
-        class="primary-button"
-        onclick="saveNewContact()"
-    >Add Contact</button>
-
-    <button
-        type="button"
-        class="outline-button"
-        onclick="cancelAddContact()"
-    >Cancel</button>
-</div>
-            
+            <div id="dialerPanel" class="panel dialer-panel hidden" aria-label="Phone keypad">
                 <input
     id="dialerNumber"
     class="dialer-display"
