@@ -839,6 +839,69 @@ html {
     display: none !important;
 }
 
+/* Number field and add-contact button */
+.dialer-number-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.dialer-number-row .dialer-display {
+    flex: 1;
+    min-width: 0;
+    margin-bottom: 18px;
+}
+
+.add-contact-icon {
+    flex: 0 0 46px;
+    width: 46px;
+    height: 46px;
+    margin-bottom: 18px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--panel-light);
+    color: var(--green);
+    font-size: 30px;
+    line-height: 1;
+}
+
+/* Small form inside the keypad panel */
+.add-contact-form {
+    padding: 16px;
+    margin: 8px 0 18px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--panel-light);
+}
+
+.add-contact-form h3 {
+    margin: 0 0 10px;
+    font-size: 17px;
+}
+
+.add-contact-form label {
+    margin-top: 12px;
+}
+
+.add-contact-form input {
+    width: 100%;
+}
+
+.add-contact-form .primary-button {
+    margin-top: 16px;
+}
+
+.add-contact-form .outline-button {
+    width: 100%;
+    margin-top: 10px;
+}
+
+#addContactError {
+    margin: 10px 0 0;
+    color: #ff8089;
+}
+
 /* Contacts screen: phone address book + floating circular keypad toggle */
 #contacts { padding-bottom: 112px; }
 .contacts-status { color: var(--muted); font-size: 12px; line-height: 1.5; margin: 14px 0 8px; }
