@@ -409,6 +409,80 @@ function dialerBackspace() {
     input.value = input.value.slice(0, -1);
 }
 
+function openAddContactForm() {
+    const number = document.getElementById("dialerNumber").value.trim();
+    const form = document.getElementById("addContactForm");
+    const keypad = document.querySelector("#contacts .dialer-keypad");
+    const actions = document.querySelector("#contacts .dialer-actions");
+    const error = document.getElementById("addContactError");
+
+    if (!number) {
+        error.textContent = "Enter a phone number first.";
+        form.classList.remove("hidden");
+    } else {
+        error.textContent = "";
+        form.classList.remove("hidden");
+    }
+
+    keypad.classList.add("hidden");
+    actions.classList.add("hidden");
+}
+
+function cancelAddContact() {
+    document.getElementById("addContactForm").classList.add("hidden");
+    document.querySelector("#contacts .dialer-keypad").classList.remove("hidden");
+    document.querySelector("#contacts .dialer-actions").classList.remove("hidden");
+    document.getElementById("addContactError").textContent = "";
+}
+
+function saveNewContact() {
+    const numberInput = document.getElementById("dialerNumber");
+    const firstInput = document.getElementById("newContactFirstName");
+    const lastInput = document.getElementById("newContactLastName");
+    const error = document.getElementById("addContactError");
+
+    const number = numberInput.value.trim();
+    const firstName = firstInput.value.trim();
+    const lastName = lastInput.value.trim();
+
+    if (!number) {
+        error.textContent = "Enter a phone number first.";
+        return;
+    }
+
+    if (!firstName || !lastName) {
+        error.textContent = "Enter both first and last name.";
+        return;
+    }
+
+    const fullName = `${firstName} ${lastName}`;
+
+    // Save in LEA's existing local contact storage.
+    contacts.push({
+        name: fullName,
+        phone: number,
+        source: "saved"
+    });
+
+    if (!saveData(STORAGE.contacts, contacts)) {
+        contacts.pop();
+        error.textContent = "Could not save this contact. Please try again.";
+        return;
+    }
+
+    renderContacts();
+
+    firstInput.value = "";
+    lastInput.value = "";
+    error.textContent = "";
+
+    document.getElementById("addContactForm").classList.add("hidden");
+    document.querySelector("#contacts .dialer-keypad").classList.remove("hidden");
+    document.querySelector("#contacts .dialer-actions").classList.remove("hidden");
+
+    // Keep the entered number in the keypad display.
+}
+
 async function callDialerNumber() {
     const input = document.getElementById("dialerNumber");
     const number = input.value.trim();
