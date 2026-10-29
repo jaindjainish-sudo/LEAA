@@ -839,6 +839,34 @@ html {
     display: none !important;
 }
 
+/* Number input and plus button inside the existing keypad */
+#contacts .dialer-number-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+#contacts .dialer-number-row .dialer-display {
+    flex: 1;
+    min-width: 0;
+    margin-bottom: 16px;
+}
+
+#contacts .add-contact-icon {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 16px;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--panel-light);
+    color: var(--green);
+    font-size: 28px;
+    line-height: 1;
+}
+
 /* Contacts screen: phone address book + floating circular keypad toggle */
 #contacts { padding-bottom: 112px; }
 .contacts-status { color: var(--muted); font-size: 12px; line-height: 1.5; margin: 14px 0 8px; }
