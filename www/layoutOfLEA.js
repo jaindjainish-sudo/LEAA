@@ -177,7 +177,16 @@ function renderContacts() {
         <div class="contact-item">
             <div class="contact-avatar">${escapeHTML(contact.name.charAt(0).toUpperCase())}</div>
             <div class="contact-details"><strong>${escapeHTML(contact.name)}</strong><small>${escapeHTML(contact.phone)}</small></div>
-            <button class="contact-call-icon" type="button" aria-label="Call ${escapeHTML(contact.name)}" onclick='callContact(${JSON.stringify(contact.phone)}, ${JSON.stringify(contact.name)})'>☎</button>
+            <button class="contact-call-icon" type="button"
+    aria-label="Call ${escapeHTML(contact.name)}"
+    onclick='callContact(${JSON.stringify(contact.phone)}, ${JSON.stringify(contact.name)})'>☎</button>
+
+${contact.source === "saved" ? `
+    <button class="mini-button delete-button" type="button"
+        onclick='deleteLEAContact(${JSON.stringify(contact.phone)}, ${JSON.stringify(contact.name)})'>
+        Delete
+    </button>
+` : ""}
         </div>
     `).join("");
 }
@@ -420,6 +429,95 @@ async function callDialerNumber() {
 
     await callContact(number, "Dialed number");
 }
+
+
+
+function openAddContactForm() {
+    const number = document.getElementById("dialerNumber").value.trim();
+    const form = document.getElementById("addContactForm");
+    const numberRow = document.querySelector("#contacts .dialer-number-row");
+    const keypad = document.querySelector("#contacts .dialer-keypad");
+    const actions = document.querySelector("#contacts .dialer-actions");
+    const error = document.getElementById("addContactError");
+
+    if (!number) {
+        error.textContent = "Enter a phone number first.";
+        return;
+    }
+
+    error.textContent = "";
+    form.classList.remove("hidden");
+    numberRow.classList.add("hidden");
+    keypad.classList.add("hidden");
+    actions.classList.add("hidden");
+}
+
+function saveNewContact() {
+    const number = document.getElementById("dialerNumber").value.trim();
+    const firstName = document.getElementById("newContactFirstName").value.trim();
+    const lastName = document.getElementById("newContactLastName").value.trim();
+    const error = document.getElementById("addContactError");
+
+    if (!number) {
+        error.textContent = "Enter a phone number first.";
+        return;
+    }
+
+    if (!firstName || !lastName) {
+        error.textContent = "Enter both first and last name.";
+        return;
+    }
+
+    const newContact = {
+        name: firstName + " " + lastName,
+        phone: number,
+        source: "saved"
+    };
+
+    contacts.push(newContact);
+
+    if (!saveData(STORAGE.contacts, contacts)) {
+        contacts.pop();
+        error.textContent = "Could not save contact. Please try again.";
+        return;
+    }
+
+    renderContacts();
+
+    // Clear the name fields, but preserve the entered phone number.
+    document.getElementById("newContactFirstName").value = "";
+    document.getElementById("newContactLastName").value = "";
+    document.getElementById("dialerNumber").value = "";
+
+  
+document.getElementById("addContactForm").classList.add("hidden");
+document.querySelector("#contacts .dialer-number-row").classList.remove("hidden");
+document.querySelector("#contacts .dialer-keypad").classList.remove("hidden");
+document.querySelector("#contacts .dialer-actions").classList.remove("hidden");
+
+    error.textContent = "";
+}
+
+
+function deleteLEAContact(phone, name) {
+    const originalContacts = contacts;
+
+    contacts = contacts.filter(contact =>
+        !(String(contact.phone || "").trim() === String(phone).trim() &&
+          String(contact.name || "").trim() === String(name).trim())
+    );
+
+    if (!saveData(STORAGE.contacts, contacts)) {
+        contacts = originalContacts;
+        alert("Could not delete this contact. Please try again.");
+        return;
+    }
+
+    renderContacts();
+    logActivity("Contact deleted", `${name} was removed from LEA contacts`);
+}
+
+
 
 
 // Initial display
