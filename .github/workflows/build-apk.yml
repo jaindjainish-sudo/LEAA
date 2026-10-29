@@ -32,62 +32,51 @@ jobs:
       - name: Create Android project
         run: npx cap add android
 
-      - name: Add Android location permissions
+      - name: Add Android permissions and native plugins
         run: |
           python3 - <<'PY'
           from pathlib import Path
           import re
+          import textwrap
 
           manifest = Path("android/app/src/main/AndroidManifest.xml")
           content = manifest.read_text()
 
-          permissions = (
-              '    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />\n'
-              '    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />\n'
+          permissions = [
+              "android.permission.ACCESS_COARSE_LOCATION",
+              "android.permission.ACCESS_FINE_LOCATION",
+              "android.permission.CALL_PHONE",
+              "android.permission.READ_CONTACTS",
+          ]
+
+          for permission in permissions:
+              if permission not in content:
+                  content, count = re.subn(
+                      r'(?m)^(\s*)<application\b',
+                      f'    <uses-permission android:name="{permission}" />\n'
+                      + r'\1<application',
+                      content,
+                      count=1
+                  )
+                  if count != 1:
+                      raise RuntimeError(
+                          f"Could not add permission: {permission}"
+                      )
+
+          manifest.write_text(content)
+
+          java_dir = Path(
+              "android/app/src/main/java/com/lea/emergency"
           )
-
-          if "android.permission.ACCESS_FINE_LOCATION" not in content:
-              content, count = re.subn(
-                  r'(?m)^(\s*)<application\b',
-                  permissions + r'\1<application',
-                  content,
-                  count=1
-              )
-              if count != 1:
-                  raise RuntimeError("Could not find the application tag in AndroidManifest.xml")
-              manifest.write_text(content)
-          PY
-
-
-      - name: Add native calling bridge
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          import re
-
-          manifest = Path("android/app/src/main/AndroidManifest.xml")
-          content = manifest.read_text()
-
-          permission = '    <uses-permission android:name="android.permission.CALL_PHONE" />\n'
-          if "android.permission.CALL_PHONE" not in content:
-              content, count = re.subn(
-                  r'(?m)^(\s*)<application\b',
-                  permission + r'\1<application',
-                  content,
-                  count=1
-              )
-              if count != 1:
-                  raise RuntimeError("Could not update AndroidManifest.xml")
-              manifest.write_text(content)
-
-          java_dir = Path("android/app/src/main/java/com/lea/emergency")
           java_dir.mkdir(parents=True, exist_ok=True)
 
-          plugin = r'''package com.lea.emergency;
+          direct_call = r'''
+          package com.lea.emergency;
 
           import android.Manifest;
           import android.content.Intent;
           import android.net.Uri;
+
           import com.getcapacitor.Plugin;
           import com.getcapacitor.PluginCall;
           import com.getcapacitor.PluginMethod;
@@ -117,7 +106,9 @@ jobs:
                   }
 
                   if (getPermissionState("phone") != PermissionState.GRANTED) {
-                      requestPermissionForAlias("phone", call, "phonePermissionCallback");
+                      requestPermissionForAlias(
+                          "phone", call, "phonePermissionCallback"
+                      );
                       return;
                   }
 
@@ -151,14 +142,118 @@ jobs:
           }
           '''
 
-          # Remove the indentation used to keep this YAML block readable.
-          import textwrap
+          phone_contacts = r'''
+          package com.lea.emergency;
+
+          import android.Manifest;
+          import android.database.Cursor;
+          import android.provider.ContactsContract;
+
+          import com.getcapacitor.JSArray;
+          import com.getcapacitor.JSObject;
+          import com.getcapacitor.PermissionState;
+          import com.getcapacitor.Plugin;
+          import com.getcapacitor.PluginCall;
+          import com.getcapacitor.PluginMethod;
+          import com.getcapacitor.annotation.CapacitorPlugin;
+          import com.getcapacitor.annotation.Permission;
+          import com.getcapacitor.annotation.PermissionCallback;
+
+          @CapacitorPlugin(
+              name = "PhoneContacts",
+              permissions = {
+                  @Permission(
+                      alias = "contacts",
+                      strings = { Manifest.permission.READ_CONTACTS }
+                  )
+              }
+          )
+          public class PhoneContactsPlugin extends Plugin {
+              @PluginMethod
+              public void getContacts(PluginCall call) {
+                  if (getPermissionState("contacts") != PermissionState.GRANTED) {
+                      requestPermissionForAlias(
+                          "contacts", call, "contactsPermissionCallback"
+                      );
+                      return;
+                  }
+                  readContacts(call);
+              }
+
+              @PermissionCallback
+              private void contactsPermissionCallback(PluginCall call) {
+                  if (getPermissionState("contacts") == PermissionState.GRANTED) {
+                      readContacts(call);
+                  } else {
+                      call.reject("Contact permission was not granted.");
+                  }
+              }
+
+              private void readContacts(PluginCall call) {
+                  JSArray results = new JSArray();
+
+                  String[] projection = {
+                      ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                      ContactsContract.CommonDataKinds.Phone.NUMBER
+                  };
+
+                  try (Cursor cursor = getContext().getContentResolver().query(
+                      ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                      projection,
+                      null,
+                      null,
+                      ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
+                          + " COLLATE NOCASE ASC"
+                  )) {
+                      if (cursor != null) {
+                          int nameIndex = cursor.getColumnIndex(
+                              ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
+                          );
+                          int numberIndex = cursor.getColumnIndex(
+                              ContactsContract.CommonDataKinds.Phone.NUMBER
+                          );
+
+                          while (cursor.moveToNext()) {
+                              String name = nameIndex >= 0
+                                  ? cursor.getString(nameIndex) : "Contact";
+                              String number = numberIndex >= 0
+                                  ? cursor.getString(numberIndex) : "";
+
+                              if (number == null || number.trim().isEmpty()) {
+                                  continue;
+                              }
+
+                              JSObject item = new JSObject();
+                              item.put(
+                                  "name",
+                                  name == null || name.trim().isEmpty()
+                                      ? "Contact" : name
+                              );
+                              item.put("phone", number);
+                              results.put(item);
+                          }
+                      }
+
+                      JSObject response = new JSObject();
+                      response.put("contacts", results);
+                      call.resolve(response);
+                  } catch (Exception e) {
+                      call.reject("Could not read phone contacts.", e);
+                  }
+              }
+          }
+          '''
+
           (java_dir / "DirectCallPlugin.java").write_text(
-              textwrap.dedent(plugin).lstrip()
+              textwrap.dedent(direct_call).lstrip()
           )
 
-          activity = java_dir / "MainActivity.java"
-          activity.write_text('''package com.lea.emergency;
+          (java_dir / "PhoneContactsPlugin.java").write_text(
+              textwrap.dedent(phone_contacts).lstrip()
+          )
+
+          activity = r'''
+          package com.lea.emergency;
 
           import android.os.Bundle;
           import com.getcapacitor.BridgeActivity;
@@ -167,12 +262,16 @@ jobs:
               @Override
               public void onCreate(Bundle savedInstanceState) {
                   registerPlugin(DirectCallPlugin.class);
+                  registerPlugin(PhoneContactsPlugin.class);
                   super.onCreate(savedInstanceState);
               }
           }
-          ''')
-          PY
+          '''
 
+          (java_dir / "MainActivity.java").write_text(
+              textwrap.dedent(activity).lstrip()
+          )
+          PY
 
       - name: Sync web app
         run: npx cap sync android
