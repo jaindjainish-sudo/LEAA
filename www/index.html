@@ -24,7 +24,26 @@
             <p class="eyebrow">PHONE</p><h1>Contacts</h1><p class="muted">Contacts saved on your phone.</p>
             <div id="phoneContactsStatus" class="contacts-status" role="status">Loading phone contacts…</div>
             <div id="contactList" class="contact-list"></div>
-            <div id="dialerPanel" class="panel dialer-panel hidden" aria-label="Phone keypad">
+           <div class="dialer-number-row">
+    <input
+        id="dialerNumber"
+        class="dialer-display"
+        type="text"
+        placeholder="Enter number"
+        aria-label="Phone number"
+        readonly
+        inputmode="none"
+        autocomplete="off"
+        tabindex="-1"
+    >
+    <button
+        type="button"
+        class="add-contact-icon"
+        onclick="openAddContactForm()"
+        aria-label="Add contact"
+        title="Add contact"
+    >＋</button>
+</div>
                 <input
     id="dialerNumber"
     class="dialer-display"
