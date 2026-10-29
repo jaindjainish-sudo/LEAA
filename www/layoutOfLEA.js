@@ -463,13 +463,12 @@ function saveNewContact() {
         return;
     }
 
-    if (!firstName || !lastName) {
-        error.textContent = "Enter both first and last name.";
-        return;
-    }
-
+   if (!firstName) {
+    error.textContent = "Enter a first name.";
+    return;
+}
     const newContact = {
-        name: firstName + " " + lastName,
+      name: [firstName, lastName].filter(Boolean).join(" "),
         phone: number,
         source: "saved"
     };
