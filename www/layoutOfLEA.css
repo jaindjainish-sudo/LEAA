@@ -794,9 +794,17 @@ html {
 }
 
 #contacts .dialer-panel {
-    position: relative;
-    margin: 16px auto 24px;
-    scroll-margin: 0;
+    position: fixed;
+    left: 50%;
+    bottom: calc(90px + env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    z-index: 15;
+
+    width: calc(100% - 32px);
+    max-width: 420px;
+    margin: 0;
+    max-height: calc(100dvh - 130px);
+    overflow-y: auto;
 }
 
 #contacts .dialer-display {
